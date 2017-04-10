@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Результаты</title>
+</head>
+<body>
+<h1>Статистика</h1>
+{% for x,val in n_c.items() %}
+{{ x }} - {{ val }} <br>
+{% endfor %}
+<br>
+{% for x,val in n_n.items() %}
+{{ x }} - {{ val }} <br>
+{% endfor %}
+</body>
+</html>
