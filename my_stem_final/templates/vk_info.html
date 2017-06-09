@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Словоформы из VK</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" type="text/css" href='static/styles.css'>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart'], 'language': 'ru'});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Слово');
+        data.addColumn('number', 'Количество');
+        data.addRows([
+          {% for word,n in data %}
+              ['{{ word }}', {{ n }}],
+          {% endfor %}
+        ]);
+
+        var options = {'title':'Словоформы из ВК',
+                       'width':1800,
+                       'height':800,
+                       'legend': { position: "none" },
+                       'hAxis': {
+                           'slantedText':true,
+                           'slantedTextAngle':50,
+                           'textStyle': {'fontSize':13},
+                           'showTextEvery':1
+                           }
+                       };
+
+        var chart = new google.visualization.ColumnChart(document.getElementById('words_div'));
+        chart.draw(data, options);
+      }
+    </script>
+	<link rel="stylesheet" type="text/css" href='base/styles.css'>
+</head>
+<body>
+<div id="main">
+<a href='/'>На Главную</a>
+<p></p>
+<form method='POST'>
+Название паблика(Например: schooloflinguistics): <br><input type='text' name='group'></input><br>
+<button type="submit">Submit</button>
+</form>
+{% if found %}
+<h2>ТОП 100</h2>
+<div id="words_div"></div>
+<ul class="words">
+{% for word,n in data[:((data|length / 2)|int)] %}
+<li>{{ word }} - {{ n }} occurrences</li>
+{% endfor %}
+</ul>
+<ul class="words">
+{% for word,n in data[((data|length / 2)|int):] %}
+<li>{{ word }} - {{ n }} occurrences</li>
+{% endfor %}
+</ul>
+{% elif data %}
+<div id="message">{{ data[0][0] }} - {{ data[0][1] }}</div>
+{% endif %}
+</div>
+</body>
+</html>

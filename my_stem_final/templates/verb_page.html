@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+
+    <meta charset="UTF-8">
+    <title>Части речи слов</title>
+	<link rel="stylesheet" type="text/css" href='base/styles.css'>
+</head>
+	<form method='post'>
+		<h1>Текст для разбора:</h1>
+		<textarea rows="2" cols="100" name="text">{{ input }}</textarea>
+		<br>
+		<input type="submit" value="Разобрать">
+	</form>
+
+	{% if text %}
+		<h1><ins>Разбор предложения</ins> :  <var>{{ text | safe}}</var></h1>
+		
+		<b><ins>Всего глаголов<ins>:</b> <p class="result"> {{ verbs_all | safe}}</p>
+		<b><ins>Доля глаголов<ins>:</b> <p class="result"> {{ prop_verbs | safe}}</p>
+		<b><ins>Совершенный вид<ins>:</b> <p class="result"> {{ perfect | safe}}</p>
+		<b><ins>Несовершенный вид<ins>:</b> <p class="result"> {{ imperfect | safe}}</p>
+		<b><ins>Частотность глаголов<ins>:</b> {% for i in freq_verbs%} <br><b><i>{{i}}</i></b> {%endfor%}
+	{% endif %}
+
+</body>
+</html>
